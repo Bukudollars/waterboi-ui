@@ -21,84 +21,87 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import Theme from '../theme';
+import DrawerAppBar from './DrawerAppBar';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright(props: any) {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
-const drawerWidth: number = 240;
+// const drawerWidth: number = 240;
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
+// interface AppBarProps extends MuiAppBarProps {
+//   open?: boolean;
+// }
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//   shouldForwardProp: (prop) => prop !== 'open',
+// })<AppBarProps>(({ theme, open }) => ({
+//   zIndex: theme.zIndex.drawer + 1,
+//   transition: theme.transitions.create(['width', 'margin'], {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   ...(open && {
+//     marginLeft: drawerWidth,
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     transition: theme.transitions.create(['width', 'margin'], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//   }),
+// }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+// const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+//   ({ theme, open }) => ({
+//     '& .MuiDrawer-paper': {
+//       position: 'relative',
+//       whiteSpace: 'nowrap',
+//       width: drawerWidth,
+//       transition: theme.transitions.create('width', {
+//         easing: theme.transitions.easing.sharp,
+//         duration: theme.transitions.duration.enteringScreen,
+//       }),
+//       boxSizing: 'border-box',
+//       ...(!open && {
+//         overflowX: 'hidden',
+//         transition: theme.transitions.create('width', {
+//           easing: theme.transitions.easing.sharp,
+//           duration: theme.transitions.duration.leavingScreen,
+//         }),
+//         width: theme.spacing(7),
+//         [theme.breakpoints.up('sm')]: {
+//           width: theme.spacing(9),
+//         },
+//       }),
+//     },
+//   }),
+// );
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+//const defaultTheme = createTheme();
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
+  const [open, setOpen] = React.useState(false);
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={Theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <DrawerAppBar />
+        {/* <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -108,7 +111,7 @@ export default function Dashboard() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={toggleDrawer}
+              onClick={toggleDrawer(true)}
               sx={{
                 marginRight: '36px',
                 ...(open && { display: 'none' }),
@@ -131,8 +134,8 @@ export default function Dashboard() {
               </Badge>
             </IconButton>
           </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
+        </AppBar> */}
+        {/* <Drawer open={open} onClose={toggleDrawer(true)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -141,7 +144,7 @@ export default function Dashboard() {
               px: [1],
             }}
           >
-            <IconButton onClick={toggleDrawer}>
+            <IconButton onClick={toggleDrawer(false)}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
@@ -151,7 +154,7 @@ export default function Dashboard() {
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
-        </Drawer>
+        </Drawer> */}
         <Box
           component="main"
           sx={{
@@ -161,11 +164,12 @@ export default function Dashboard() {
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
+            width: '100%',
             overflow: 'auto',
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          {/* <Toolbar /> */}
+          <Box sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
@@ -181,7 +185,7 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -192,7 +196,7 @@ export default function Dashboard() {
                 >
                   <Deposits />
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
@@ -200,8 +204,8 @@ export default function Dashboard() {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
+            {/* <Copyright sx={{ pt: 4 }} /> */}
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>
